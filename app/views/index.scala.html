@@ -1,0 +1,40 @@
+@(contacts: List[models.Contact], contact: Form[models.Contact])(implicit messages: Messages)
+
+@layout {
+
+    <h2>New Contact</h2>
+
+    @helper.form(action = routes.Contacts.create) {
+        @helper.inputText(contact("name"), '_label -> "Name")
+        @helper.inputText(contact("emailAddress"), '_label -> "Email address")
+
+        <input type="submit" value="New Contact" />
+    }
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email Address</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @contacts.map { contact =>
+        <tr>
+            <td>@contact.name</td>
+            <td>@contact.emailAddress</td>
+            <td>
+                <a href='@routes.Contacts.edit(contact.id)'>Edit</a>
+            </td>
+            <td>
+                @helper.form(action = routes.Contacts.delete(contact.id)) {
+                    <input type="submit" value="Delete"/>
+                }
+            </td>
+        </tr>
+        }
+        </tbody>
+    </table>
+}
