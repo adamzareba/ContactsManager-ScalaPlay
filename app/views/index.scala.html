@@ -6,6 +6,7 @@
 
     @helper.form(action = routes.Contacts.create) {
         @helper.inputText(contact("name"), '_label -> "Name")
+        @helper.inputText(contact("age"), '_label -> "Age")
         @helper.inputText(contact("emailAddress"), '_label -> "Email address")
 
         <input type="submit" value="New Contact" />
@@ -15,6 +16,7 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Age</th>
                 <th>Email Address</th>
                 <th></th>
                 <th></th>
@@ -24,6 +26,7 @@
         @contacts.map { contact =>
         <tr>
             <td>@contact.name</td>
+            <td>@contact.age</td>
             <td>@contact.emailAddress</td>
             <td>
                 <a href='@routes.Contacts.edit(contact.id)'>Edit</a>

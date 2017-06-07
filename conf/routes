@@ -8,13 +8,14 @@
 #GET     /token/:id                  controllers.Application.token(id: Long)
 
 ## Contacts
-GET     /                          controllers.Contacts.index
-POST    /contact                   controllers.Contacts.create
-GET     /contact/:id               controllers.Contacts.edit(id: Long)
-POST    /contact/:id               controllers.Contacts.update(id: Long)
-POST    /contact/:id/delete        controllers.Contacts.delete(id: Long)
+GET     /                               controllers.Contacts.index
+POST    /contact                        controllers.Contacts.create
+#GET     /contact/:id                    controllers.Contacts.edit(id: Long)
+GET     /contact/$id<[0-9]+>            controllers.Contacts.edit(id: Long)
+POST    /contact/$id<[0-9]+>            controllers.Contacts.update(id: Long)
+POST    /contact/$id<[0-9]+>/delete     controllers.Contacts.delete(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file              controllers.Assets.at(path="/public", file)
+GET     /assets/*file                   controllers.Assets.at(path="/public", file)
 
     

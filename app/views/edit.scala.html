@@ -5,6 +5,7 @@
 
     @helper.form(action = routes.Contacts.update(id)) {
         @helper.inputText(contact("name"), '_label -> "Name")
+        @helper.inputText(contact("age"), '_label -> "Age")
         @helper.inputText(contact("emailAddress"), '_label -> "Email address")
 
         <input type="submit" value="Update Contact" />

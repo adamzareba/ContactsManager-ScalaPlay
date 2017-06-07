@@ -4,7 +4,7 @@ import anorm._
 import play.api.Play.current
 import play.api.db._
 
-case class Contact(id: Long, name: String, emailAddress: String)
+case class Contact(id: Long, name: String, age: Int, emailAddress: String)
 
 object Contact {
 
@@ -14,6 +14,7 @@ object Contact {
         Contact(
           id = row[Long]("id"),
           name = row[String]("name"),
+          age = row[Int]("age"),
           emailAddress = row[String]("emailAddress")
         )
       }.toList
@@ -22,8 +23,9 @@ object Contact {
 
   def create(contact: Contact) {
     DB.withConnection { implicit connection =>
-      SQL("INSERT INTO contacts(name, emailAddress) VALUES({name}, {emailAddress})").on(
+      SQL("INSERT INTO contacts(name, age, emailAddress) VALUES({name}, {age}, {emailAddress})").on(
         "name" -> contact.name,
+        "age" -> contact.age,
         "emailAddress" -> contact.emailAddress
       ).execute()
     }
@@ -35,6 +37,7 @@ object Contact {
         Contact(
           id = row[Long]("id"),
           name = row[String]("name"),
+          age = row[Int]("age"),
           emailAddress = row[String]("emailAddress")
         )
       }
@@ -43,9 +46,10 @@ object Contact {
 
   def update(id: Long, contact: Contact) {
     DB.withConnection { implicit connection =>
-      SQL("UPDATE contacts SET name = {name}, emailAddress = {emailAddress} where id={id}").on(
+      SQL("UPDATE contacts SET name = {name}, emailAddress = {emailAddress}, age = {age} where id={id}").on(
         "id" -> id,
         "name" -> contact.name,
+        "age" -> contact.age,
         "emailAddress" -> contact.emailAddress
       ).execute()
     }
@@ -64,6 +68,7 @@ object Contact {
     mapping(
       "id" -> ignored(0L),
       "name" -> nonEmptyText,
+      "age" -> number(min = 0, max = 150),
       "emailAddress" -> email
     )(Contact.apply)(Contact.unapply)
   )
