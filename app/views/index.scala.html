@@ -5,13 +5,13 @@
     <h2>New Contact</h2>
 
     <div class="container">
-        @helper.form(action = routes.Contacts.create, 'class -> "offset-sm-2 form-inline") {
+        @helper.form(action = routes.Contacts.create, 'class -> "form-inline") {
             <div class="form-group">
-                @helper.inputText(contact("name"), '_label -> "Name", 'class -> "form-control")
-                @helper.inputText(contact("age"), '_label -> "Age", 'class -> "form-control")
-                @helper.inputText(contact("emailAddress"), '_label -> "Email address", 'class -> "form-control")
+                @helper.inputText(contact("name"), '_label -> "Name", 'class -> "form-control", 'placeholder -> "Please write name ...")
+                @helper.inputText(contact("age"), '_label -> "Age", 'class -> "form-control", 'placeholder -> "Please write age ...")
+                @helper.inputText(contact("emailAddress"), '_label -> "Email address", 'class -> "form-control", 'placeholder -> "Please write e-mail ...")
 
-                <input type="submit" value="New Contact" class="btn btn-primary"/>
+                <input type="submit" value="New Contact" class="col-sm-offset-5 btn btn-primary"/>
             </div>
         }
     </div>
