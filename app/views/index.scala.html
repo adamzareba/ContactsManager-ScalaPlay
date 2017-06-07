@@ -4,42 +4,46 @@
 
     <h2>New Contact</h2>
 
-    @helper.form(action = routes.Contacts.create, 'class -> "form-inline") {
-        <div class="form-group">
-            @helper.inputText(contact("name"), '_label -> "Name", 'class -> "form-control")
-            @helper.inputText(contact("age"), '_label -> "Age", 'class -> "form-control")
-            @helper.inputText(contact("emailAddress"), '_label -> "Email address", 'class -> "form-control")
+    <div class="container">
+        @helper.form(action = routes.Contacts.create, 'class -> "offset-sm-2 form-inline") {
+            <div class="form-group">
+                @helper.inputText(contact("name"), '_label -> "Name", 'class -> "form-control")
+                @helper.inputText(contact("age"), '_label -> "Age", 'class -> "form-control")
+                @helper.inputText(contact("emailAddress"), '_label -> "Email address", 'class -> "form-control")
 
-            <input type="submit" value="New Contact" class="btn btn-default"/>
-        </div>
-    }
-
-    <table class="table-striped">
-        <thead>
-            <tr>
-                <th class="col-md-3">Name</th>
-                <th class="col-md-1">Age</th>
-                <th class="col-md-3">Email Address</th>
-                <th class="col-md-2"></th>
-                <th class="col-md-2"></th>
-            </tr>
-        </thead>
-        <tbody>
-        @contacts.map { contact =>
-        <tr>
-            <td>@contact.name</td>
-            <td>@contact.age</td>
-            <td>@contact.emailAddress</td>
-            <td>
-                <a href='@routes.Contacts.edit(contact.id)'>Edit</a>
-            </td>
-            <td>
-                @helper.form(action = routes.Contacts.delete(contact.id)) {
-                    <input type="submit" value="Delete"/>
-                }
-            </td>
-        </tr>
+                <input type="submit" value="New Contact" class="btn btn-primary"/>
+            </div>
         }
-        </tbody>
-    </table>
+    </div>
+
+    <div class="container">
+        <table class="table-striped">
+            <thead>
+                <tr>
+                    <th class="col-md-3">Name</th>
+                    <th class="col-md-1">Age</th>
+                    <th class="col-md-3">Email Address</th>
+                    <th class="col-md-2"></th>
+                    <th class="col-md-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+            @contacts.map { contact =>
+            <tr>
+                <td>@contact.name</td>
+                <td>@contact.age</td>
+                <td>@contact.emailAddress</td>
+                <td>
+                    <a href='@routes.Contacts.edit(contact.id)'>Edit</a>
+                </td>
+                <td>
+                    @helper.form(action = routes.Contacts.delete(contact.id)) {
+                        <input type="submit" value="Delete" class="btn btn-default"/>
+                    }
+                </td>
+            </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 }
