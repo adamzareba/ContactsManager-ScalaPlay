@@ -3,11 +3,13 @@
 @layout {
     <h2>Update Contact</h2>
 
-    @helper.form(action = routes.Contacts.update(id)) {
-        @helper.inputText(contact("name"), '_label -> "Name")
-        @helper.inputText(contact("age"), '_label -> "Age")
-        @helper.inputText(contact("emailAddress"), '_label -> "Email address")
+    @helper.form(action = routes.Contacts.update(id), 'class -> "form-inline") {
+        <div class="form-group">
+            @helper.inputText(contact("name"), '_label -> "Name", 'class -> "form-control")
+            @helper.inputText(contact("age"), '_label -> "Age", 'class -> "form-control")
+            @helper.inputText(contact("emailAddress"), '_label -> "Email address", 'class -> "form-control")
 
-        <input type="submit" value="Update Contact" />
+            <input type="submit" value="Update Contact" class="btn btn-default" />
+        </div>
     }
 }

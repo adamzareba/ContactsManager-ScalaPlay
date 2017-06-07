@@ -4,12 +4,14 @@
 
     <h2>New Contact</h2>
 
-    @helper.form(action = routes.Contacts.create) {
-        @helper.inputText(contact("name"), '_label -> "Name")
-        @helper.inputText(contact("age"), '_label -> "Age")
-        @helper.inputText(contact("emailAddress"), '_label -> "Email address")
+    @helper.form(action = routes.Contacts.create, 'class -> "form-inline") {
+        <div class="form-group">
+            @helper.inputText(contact("name"), '_label -> "Name", 'class -> "form-control")
+            @helper.inputText(contact("age"), '_label -> "Age", 'class -> "form-control")
+            @helper.inputText(contact("emailAddress"), '_label -> "Email address", 'class -> "form-control")
 
-        <input type="submit" value="New Contact" />
+            <input type="submit" value="New Contact" class="btn btn-default"/>
+        </div>
     }
 
     <table class="table-striped">
