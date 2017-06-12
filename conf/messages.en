@@ -1,0 +1,12 @@
+contact.new=New contact
+contact.edit=Edit
+contact.update=Update contact
+contact.delete=Delete
+contact.fields.name=Name
+contact.fields.name.placeholder=Please write name...
+contact.fields.age=Age
+contact.fields.age.placeholder=Please write age...
+contact.fields.email=E-mail address
+contact.fields.email.placeholder=Please write e-mail...
+
+

@@ -8,7 +8,7 @@ import play.api.mvc._
 
 class Contacts @Inject()(contactService: ContactService, val messagesApi: MessagesApi) extends Controller with I18nSupport {
 
-  def index = Action {
+  def index = Action { implicit request =>
     val contacts = contactService.all
 
     Ok(views.html.index(contacts, contactService.form))
@@ -24,7 +24,7 @@ class Contacts @Inject()(contactService: ContactService, val messagesApi: Messag
     )
   }
 
-  def edit(id: Long) = Action {
+  def edit(id: Long) = Action { implicit request =>
     val contact = contactService.get(id)
     Ok(views.html.edit(id, contactService.form.fill(contact)))
   }

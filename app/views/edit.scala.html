@@ -1,16 +1,16 @@
 @(id: Long, contact: Form[Contact])(implicit messages: Messages)
 
 @layout {
-    <h2>Update Contact</h2>
+    <h2>@messages("contact.update")</h2>
 
     <div class="container">
         @helper.form(action = routes.Contacts.update(id), 'class -> "form-inline") {
             <div class="form-group">
-                @helper.inputText(contact("name"), '_label -> "Name", 'class -> "form-control")
-                @helper.inputText(contact("age"), '_label -> "Age", 'class -> "form-control")
-                @helper.inputText(contact("emailAddress"), '_label -> "Email address", 'class -> "form-control")
+                @helper.inputText(contact("name"), '_label -> messages("contact.fields.name"), 'class -> "form-control")
+                @helper.inputText(contact("age"), '_label -> messages("contact.fields.age"), 'class -> "form-control")
+                @helper.inputText(contact("emailAddress"), '_label -> messages("contact.fields.email"), 'class -> "form-control")
 
-                <input type="submit" value="Update Contact" class="col-sm-offset-5 btn btn-primary" />
+                <input type="submit" value="@messages("contact.update")" class="col-sm-offset-5 btn btn-primary" />
             </div>
         }
     </div>

@@ -2,46 +2,46 @@
 
 @layout {
 
-    <h2>New Contact</h2>
+    <h2>@messages("contact.new")</h2>
 
     <div class="container">
-        @helper.form(action = routes.Contacts.create, 'class -> "form-inline") {
-            <div class="form-group">
-                @helper.inputText(contact("name"), '_label -> "Name", 'class -> "form-control", 'placeholder -> "Please write name ...")
-                @helper.inputText(contact("age"), '_label -> "Age", 'class -> "form-control", 'placeholder -> "Please write age ...")
-                @helper.inputText(contact("emailAddress"), '_label -> "Email address", 'class -> "form-control", 'placeholder -> "Please write e-mail ...")
+    @helper.form(action = routes.Contacts.create, 'class -> "form-inline") {
+        <div class="form-group">
+            @helper.inputText(contact("name"), '_label -> messages("contact.fields.name"), 'class -> "form-control", 'placeholder -> messages("contact.fields.name.placeholder"))
+            @helper.inputText(contact("age"), '_label -> messages("contact.fields.age"), 'class -> "form-control", 'placeholder -> messages("contact.fields.age.placeholder"))
+            @helper.inputText(contact("emailAddress"), '_label -> messages("contact.fields.email"), 'class -> "form-control", 'placeholder -> messages("contact.fields.email.placeholder"))
 
-                <input type="submit" value="New Contact" class="col-sm-offset-5 btn btn-primary"/>
-            </div>
-        }
+            <input type="submit" value="@messages("contact.new")" class="col-sm-offset-5 btn btn-primary"/>
+        </div>
+    }
     </div>
 
     <div class="container">
         <table class="table-striped">
             <thead>
                 <tr>
-                    <th class="col-md-3">Name</th>
-                    <th class="col-md-1">Age</th>
-                    <th class="col-md-3">Email Address</th>
+                    <th class="col-md-3">@messages("contact.fields.name")</th>
+                    <th class="col-md-1">@messages("contact.fields.age")</th>
+                    <th class="col-md-3">@messages("contact.fields.email")</th>
                     <th class="col-md-2"></th>
                     <th class="col-md-2"></th>
                 </tr>
             </thead>
             <tbody>
             @contacts.map { contact =>
-            <tr>
-                <td>@contact.name</td>
-                <td>@contact.age</td>
-                <td>@contact.emailAddress</td>
-                <td>
-                    <a href='@routes.Contacts.edit(contact.id)'>Edit</a>
-                </td>
-                <td>
+                <tr>
+                    <td>@contact.name</td>
+                    <td>@contact.age</td>
+                    <td>@contact.emailAddress</td>
+                    <td>
+                        <a href='@routes.Contacts.edit(contact.id)'>@messages("contact.edit")</a>
+                    </td>
+                    <td>
                     @helper.form(action = routes.Contacts.delete(contact.id)) {
-                        <input type="submit" value="Delete" class="btn btn-default"/>
+                        <input type="submit" value="@messages("contact.delete")" class="btn btn-default"/>
                     }
-                </td>
-            </tr>
+                    </td>
+                </tr>
             }
             </tbody>
         </table>
