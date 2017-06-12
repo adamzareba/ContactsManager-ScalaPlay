@@ -1,48 +1,46 @@
 package controllers
 
-import models.Contact
-import play.api.Play.current
-import play.api.i18n.Messages.Implicits._
+import javax.inject.Inject
+
+import models.ContactService
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 
-object Contacts extends Controller {
+class Contacts @Inject()(contactService: ContactService, val messagesApi: MessagesApi) extends Controller with I18nSupport {
 
   def index = Action {
-    val contacts = Contact.all
+    val contacts = contactService.all
 
-    Ok(views.html.index(contacts, Contact.form))
+    Ok(views.html.index(contacts, contactService.form))
   }
 
   def create = Action { implicit request =>
-    Contact.form.bindFromRequest.fold(
-      errors => BadRequest(views.html.index(Contact.all, errors)),
+    contactService.form.bindFromRequest.fold(
+      errors => BadRequest(views.html.index(contactService.all, errors)),
       contact => {
-        Contact.create(contact)
+        contactService.create(contact)
         Redirect(routes.Contacts.index())
       }
     )
   }
 
   def edit(id: Long) = Action {
-    Contact.get(id).map { contact =>
-      Ok(views.html.edit(id, Contact.form.fill(contact)))
-    } getOrElse {
-      Redirect(routes.Contacts.index())
-    }
+    val contact = contactService.get(id)
+    Ok(views.html.edit(id, contactService.form.fill(contact)))
   }
 
   def update(id: Long) = Action { implicit request =>
-    Contact.form.bindFromRequest.fold(
+    contactService.form.bindFromRequest.fold(
       errors => BadRequest(views.html.edit(id, errors)),
       contact => {
-        Contact.update(id, contact)
+        contactService.update(id, contact)
         Redirect(routes.Contacts.index())
       }
     )
   }
 
   def delete(id: Long) = Action {
-    Contact.delete(id)
+    contactService.delete(id)
     Redirect(routes.Contacts.index())
   }
 }
