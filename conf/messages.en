@@ -1,3 +1,5 @@
+headers.welcome=Welcome
+headers.contacts=Contacts
 contact.new=New contact
 contact.edit=Edit
 contact.update=Update contact
@@ -8,5 +10,4 @@ contact.fields.age=Age
 contact.fields.age.placeholder=Please write age...
 contact.fields.email=E-mail address
 contact.fields.email.placeholder=Please write e-mail...
-
 

@@ -2,34 +2,37 @@ package controllers
 
 import javax.inject.Inject
 
+import com.mohiva.play.silhouette.api._
+import com.mohiva.play.silhouette.impl.providers.CredentialsProvider
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import models.ContactService
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{ I18nSupport, MessagesApi }
 import play.api.mvc._
+import utils.auth.{ DefaultEnv, WithProvider }
 
-class Contacts @Inject()(contactService: ContactService, val messagesApi: MessagesApi) extends Controller with I18nSupport {
+import scala.concurrent.Future
 
-  def index = Action { implicit request =>
-    val contacts = contactService.all
+class Contacts @Inject() (contactService: ContactService, val messagesApi: MessagesApi, silhouette: Silhouette[DefaultEnv]) extends Controller with I18nSupport {
 
-    Ok(views.html.index(contacts, contactService.form))
+  def index = silhouette.SecuredAction(WithProvider[DefaultEnv#A](CredentialsProvider.ID)).async { implicit request =>
+    contactService.all.map(contacts => Ok(views.html.index(contacts, contactService.form)))
   }
 
-  def create = Action { implicit request =>
+  def create = silhouette.SecuredAction(WithProvider[DefaultEnv#A](CredentialsProvider.ID)).async { implicit request =>
     contactService.form.bindFromRequest.fold(
-      errors => BadRequest(views.html.index(contactService.all, errors)),
+      errors => contactService.all.map(contacts => BadRequest(views.html.index(contacts, errors))),
       contact => {
         contactService.create(contact)
-        Redirect(routes.Contacts.index())
+        Future(Redirect(routes.Contacts.index()))
       }
     )
   }
 
-  def edit(id: Long) = Action { implicit request =>
-    val contact = contactService.get(id)
-    Ok(views.html.edit(id, contactService.form.fill(contact)))
+  def edit(id: Long) = Action.async { implicit request =>
+    contactService.get(id).map(contact => Ok(views.html.edit(id, contactService.form.fill(contact))))
   }
 
-  def update(id: Long) = Action { implicit request =>
+  def update(id: Long) = silhouette.SecuredAction(WithProvider[DefaultEnv#A](CredentialsProvider.ID)) { implicit request =>
     contactService.form.bindFromRequest.fold(
       errors => BadRequest(views.html.edit(id, errors)),
       contact => {
@@ -39,7 +42,7 @@ class Contacts @Inject()(contactService: ContactService, val messagesApi: Messag
     )
   }
 
-  def delete(id: Long) = Action {
+  def delete(id: Long) = silhouette.SecuredAction(WithProvider[DefaultEnv#A](CredentialsProvider.ID)) {
     contactService.delete(id)
     Redirect(routes.Contacts.index())
   }

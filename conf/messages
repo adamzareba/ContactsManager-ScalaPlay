@@ -1,19 +1,6 @@
-headers.welcome=Witaj
-headers.contacts=Kontakty
-contact.new=Nowy kontakt
-contact.edit=Edytuj
-contact.update=Aktualizuj kontakt
-contact.delete=Usuń
-contact.fields.name=Nazwa
-contact.fields.name.placeholder=Podaj proszę nazwę...
-contact.fields.age=Wiek
-contact.fields.age.placeholder=Podaj proszę wiek...
-contact.fields.email=Adres e-mail
-contact.fields.email.placeholder=Podaj proszę adres e-mail...
-
 error.email = Valid email required
 error.required = This field is required
-invalid.credentials = Niepoprawne dane!
+invalid.credentials = Invalid credentials!
 access.denied = Access denied!
 could.not.authenticate = Could not authenticate with social provider! Please try again!
 
@@ -26,48 +13,48 @@ change.password.title = Silhouette - Change Password
 activate.account.title = Silhouette - Activate Account
 
 toggle.navigation = Toggle navigation
-welcome.signed.in = Witamy, jesteś zalogowany!
+welcome.signed.in = Welcome, you are now signed in!
 
-sign.up.account = Stwórz nowe konto
-sign.in.credentials = Zaloguj się przy pomocy danych do logowania
+sign.up.account = Sign up for a new account
+sign.in.credentials = Sign in with your credentials
 
-error = Błąd!
-info = Informacja!
-success = Gratulacje!
+error = Error!
+info = Info!
+success = Success!
 home = Home
-first.name = Imię
-last.name = Nazwisko
-full.name = Imię i nazwisko
-email = Adres e-mail
-password = Hasło
-send = Wyślij
-change = Zmień
-reset = Resetuj
-sign.up = Zarejestruj się
-sign.in = Zaloguj się
-sign.out = Wyloguj się
-sign.in.now = Zaloguj się teraz
-sign.up.now = Zarejestruj się teraz
-already.a.member = Masz już konto?
-not.a.member = Nie masz jeszcze konta?
-forgot.your.password = Zapomniałeś hasło?
-forgot.password = Zapomniałeś hasło
+first.name = First name
+last.name = Last name
+full.name = Full name
+email = Email
+password = Password
+send = Send
+change = Change
+reset = Reset
+sign.up = Sign up
+sign.in = Sign in
+sign.out = Sign out
+sign.in.now = Sign in now
+sign.up.now = Sign up now
+already.a.member = Already a member?
+not.a.member = Not a member?
+forgot.your.password = Forgot your password?
+forgot.password = Forgot password
 reset.password = Reset password
-change.password = Zmień hasło
-activate.account = Aktywuj konto
-current.password = Obecne hasło
-new.password = Nowe hasło
+change.password = Change password
+activate.account = Activate Account
+current.password = Current password
+new.password = New password
 
-remember.me = Pamiętaj mnie na tym komputerze
-or.use.social = Lub użyj istniejącego konta z listy istniejących serwisów do logowania:
-forgot.password.info = Podaj swoj adres e-mail a my wyślemy ci wiadomość z instrukacji jak zresetować hasło.
+remember.me = Remember my login on this computer
+or.use.social = Or use your existing account on one of the following services to sign in:
+forgot.password.info = Please enter your email address and we will send you an email with further instructions to reset your password.
 strong.password.info = Strong passwords include numbers, letters and punctuation marks.
 current.password.invalid = The entered password is invalid. Please enter the correct password!
 activate.account.text1 = You can''t log in yet. We previously sent an activation email to you at:
 activate.account.text2 = Please follow the instructions in that email to activate your account.
 activate.account.text3 = Click <a href="{0}">here</a> to send the activation email again.
 
-sign.up.email.sent = Prawie skończone! Wysłaliśmy maila aktywacyjnego na adres {0}. Prosimy postępować zgodnie z intrukcją zawartą w mailu w celu aktywowania konta. Jeśli nie widzisz maila, sprawdź folder ze spamem, albo spróbuj zalgować się ponownie w celu ponownego wysłania maila aktywacyjnego.
+sign.up.email.sent = You''re almost done! We sent an activation mail to {0}. Please follow the instructions in the email to activate your account. If it doesn''t arrive, check your spam folder, or try to log in again to send another activation mail.
 activation.email.sent = We sent another activation email to you at {0}. It might take a few minutes for it to arrive; be sure to check your spam folder.
 reset.email.sent = We have sent you an email with further instructions to reset your password, on condition that the address was found in our system. If you do not receive an email within the next 5 minutes, then please recheck your entered email address and try it again.
 
@@ -75,7 +62,7 @@ invalid.activation.link = The link isn't valid anymore! Please sign in to send t
 invalid.reset.link = The link isn't valid anymore! Please request a new link to reset your password.
 
 password.reset = We have reset your password. You can now sign in with your credentials.
-account.activated = Twoje konto jest już aktywowane! Zaloguj się, aby używać swojego konta.
+account.activated = Your account is now activated! Please sign in to use your new account.
 password.changed = Your password has been changed.
 
 google = Google

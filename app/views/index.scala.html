@@ -1,4 +1,4 @@
-@(contacts: List[models.Contact], contact: Form[models.Contact])(implicit messages: Messages)
+@(contacts: List[models.Contact], contact: Form[models.Contact])(implicit request: RequestHeader, messages: Messages)
 
 @layout {
 
@@ -7,6 +7,7 @@
     <div class="container">
     @helper.form(action = routes.Contacts.create, 'class -> "form-inline") {
         <div class="form-group">
+            @helper.CSRF.formField
             @helper.inputText(contact("name"), '_label -> messages("contact.fields.name"), 'class -> "form-control", 'placeholder -> messages("contact.fields.name.placeholder"))
             @helper.inputText(contact("age"), '_label -> messages("contact.fields.age"), 'class -> "form-control", 'placeholder -> messages("contact.fields.age.placeholder"))
             @helper.inputText(contact("emailAddress"), '_label -> messages("contact.fields.email"), 'class -> "form-control", 'placeholder -> messages("contact.fields.email.placeholder"))
@@ -38,6 +39,7 @@
                     </td>
                     <td>
                     @helper.form(action = routes.Contacts.delete(contact.id)) {
+                        @helper.CSRF.formField
                         <input type="submit" value="@messages("contact.delete")" class="btn btn-default"/>
                     }
                     </td>

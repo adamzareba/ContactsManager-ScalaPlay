@@ -2,52 +2,45 @@ package models
 
 import javax.inject.Inject
 
-import anorm._
-import play.api.db._
+import play.api.db.slick.DatabaseConfigProvider
+import slick.driver.JdbcProfile
+
+import scala.concurrent.Future
 
 case class Contact(id: Long, name: String, age: Int, emailAddress: String)
 
-class ContactService @Inject()(database: Database) {
+class ContactService @Inject() (protected val dbConfigProvider: DatabaseConfigProvider) {
 
-  implicit val parser: RowParser[Contact] = Macro.namedParser[Contact]
+  val dbConfig = dbConfigProvider.get[JdbcProfile]
+  val db = dbConfig.db
 
-  def all = {
-    database.withConnection { implicit connection =>
-      SQL("SELECT * FROM contacts").as(parser.*)
-    }
+  import dbConfig.driver.api._
+
+  private[models] val Contacts = TableQuery[ContactsTable]
+
+  //  def all: DBIO[Seq[Contact]] = {
+  //    Contacts.result
+  //  }
+
+  def all: Future[List[Contact]] = {
+    db.run(Contacts.to[List].result)
   }
 
-  def create(contact: Contact) {
-    database.withConnection { implicit connection =>
-      SQL("INSERT INTO contacts(name, age, emailAddress) VALUES({name}, {age}, {emailAddress})").on(
-        "name" -> contact.name,
-        "age" -> contact.age,
-        "emailAddress" -> contact.emailAddress
-      ).executeInsert()
-    }
+  def create(contact: Contact): Future[Long] = {
+    db.run(Contacts returning Contacts.map(_.id) += contact)
   }
 
-  def get(id: Long) = {
-    database.withConnection { implicit connection =>
-      SQL("SELECT * FROM contacts WHERE id = {id}").on("id" -> id).as(parser.single)
-    }
+  def get(id: Long): Future[Contact] = {
+    db.run(Contacts.filter(_.id === id).result.head)
   }
 
-  def update(id: Long, contact: Contact) {
-    database.withConnection { implicit connection =>
-      SQL("UPDATE contacts SET name = {name}, emailAddress = {emailAddress}, age = {age} where id={id}").on(
-        "id" -> id,
-        "name" -> contact.name,
-        "age" -> contact.age,
-        "emailAddress" -> contact.emailAddress
-      ).executeUpdate()
-    }
+  def update(id: Long, contact: Contact): Future[Int] = {
+    val computerToUpdate: Contact = contact.copy(id)
+    db.run(Contacts.filter(_.id === id).update(computerToUpdate))
   }
 
-  def delete(id: Long) {
-    database.withConnection { implicit connection =>
-      SQL("DELETE FROM contacts WHERE id = {id}").on("id" -> id).executeUpdate()
-    }
+  def delete(id: Long): Future[Int] = {
+    db.run(Contacts.filter(_.id === id).delete)
   }
 
   import play.api.data.Forms._
@@ -61,4 +54,20 @@ class ContactService @Inject()(database: Database) {
       "emailAddress" -> email
     )(Contact.apply)(Contact.unapply)
   )
+
+  private[models] class ContactsTable(tag: Tag) extends Table[Contact](tag, "CONTACTS") {
+
+    def id = column[Long]("ID", O.AutoInc, O.PrimaryKey)
+
+    def name = column[String]("NAME")
+
+    def age = column[Int]("AGE")
+
+    def emailAddress = column[String]("EMAILADDRESS")
+
+    def * = (id, name, age, emailAddress) <> (Contact.tupled, Contact.unapply)
+
+    def ? = (id.?, name.?, age.?, emailAddress.?).shaped.<>({ r => import r._; _1.map(_ => Contact.tupled((_1.get, _2.get, _3.get, _4.get))) }, (_: Any) => throw new Exception("Inserting into ? projection not supported."))
+  }
+
 }
